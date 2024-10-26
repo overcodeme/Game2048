@@ -9,7 +9,6 @@ body {
 }
 
 .game-container {
-    display: inline-block;
     padding: 10px;
     background-color: #bbada0;
     border-radius: 5px;
@@ -32,4 +31,21 @@ body {
     font-size: 24px;
     color: #776e65;
     border-radius: 5px;
+}
+
+.tile-2 {
+
+}
+
+.tile-4 {
+
+}
+
+.tile-8 {
+
+}
+
+.tile-16 {
+
+    
 }
