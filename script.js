@@ -1,4 +1,5 @@
 const grid = document.getElementById('grid');
+document.addEventListener('keydown', handleKeyPress);
 
 let board = [
     [0, 0, 0, 0],
@@ -62,7 +63,35 @@ function combineRow(row) {
 }
 
 function transpose(matrix) {
-    return matrix[0].map((_, columnIndex) => matrix.map(row => row[columnIndex]));
+    const transposed = [];
+
+    for (let colIndex = 0; colIndex < 4; colIndex++) {
+        const newRow = []; 
+        for (let rowIndex = 0; rowIndex < 4; rowIndex++) {
+            newRow.push(matrix[rowIndex][colIndex]); 
+        }
+        transposed.push(newRow); 
+    }
+
+    return transposed; 
+}
+
+function handleKeyPress(event) {
+    switch (event.key) {
+        case 'ArrowUp':
+            moveUp(); 
+            break;
+        case 'ArrowDown':
+            moveDown();
+            break;
+        case 'ArrowLeft':
+            moveLeft(); 
+            break;
+        case 'ArrowRight':
+            moveRight(); 
+            break;
+    }
+    createBoard();
 }
 
 
