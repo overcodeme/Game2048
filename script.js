@@ -22,7 +22,7 @@ function createBoard() {
                 cell.classList.add(`tile-${board[row][col]}`);
             }
 
-            grid.appendChild(cell);
+            grid.appendChild(cell); 
         }
     }
 }
@@ -92,6 +92,10 @@ function handleKeyPress(event) {
             break;
     }
     createBoard();
+
+    if (isGameOver()) {
+        showGameOver();
+    }
 }
 
 
@@ -141,6 +145,31 @@ function moveDown() {
     board = transpose(board);     
     addRandomTile();
     createBoard();
+}
+
+function isGameOver() {
+    for (let row = 0; row < 4; row ++) {
+        for (let col = 0; col < 4; col++) {
+            if (board[row][col] === 0) {
+                return False
+            }
+        }
+    }
+
+    for (let row = 0; row < 3; row++) {
+        for (let col = 0; col < 3; col ++) {
+
+            if (board[row][col] === board[row][col+1]) {
+                return False
+            }
+
+            if (board[row][col] === board[row+1][col]) {
+                return False
+            }
+        }
+    }
+
+    return True
 }
 
 
