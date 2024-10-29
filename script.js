@@ -169,10 +169,44 @@ function isGameOver() {
         }
     }
 
+    showGameOver()
     return True
 }
 
+function showGameOver() {
+    const overlay = document.createElement('div')
+    overlay.classList.add('overlay')
 
+    const message = document.createElement('div')
+    message.classList.add('message')
+    message.textContent = 'Game Over'
+
+    const restartButton = document.createElement('button')
+    restartButton.textContent = 'Restart'
+    restartButton.addEventListener('click', restartGame)
+
+    message.appendChild(restartButton)
+    overlay.appendChild(message)
+    document.body.appendChild(overlay)
+}
+
+function restartGame() {
+    const overlay = document.querySelector('.overlay')
+    if (overlay) {
+        document.body.removeChild('overlay')
+    }
+
+    board = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ];
+
+    addRandomTile(); 
+    addRandomTile();
+    createBoard();
+}
 
 
 createBoard();
