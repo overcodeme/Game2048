@@ -1,12 +1,16 @@
+const stats = document.getElementById('stats');
 const grid = document.getElementById('grid');
 document.addEventListener('keydown', handleKeyPress);
 
+let score = 0;
 let board = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
 ];
+
+stats.textContent = `Score: ${score}`
 
 function createBoard() {
     const grid = document.getElementById('grid');
@@ -57,6 +61,8 @@ function combineRow(row) {
         if (row[i] === row[i + 1] && row[i] !== 0) {
             row[i] *= 2;  
             row[i + 1] = 0; 
+            score += (row[i] + row[i+1]);
+            stats.textContent = `Score: ${score}`
         }
     }
     return row;
@@ -192,9 +198,7 @@ function showGameOver() {
 
 function restartGame() {
     const overlay = document.querySelector('.overlay')
-    if (overlay) {
-        document.body.removeChild('overlay')
-    }
+    document.body.removeChild(overlay)
 
     board = [
         [0, 0, 0, 0],
@@ -203,9 +207,10 @@ function restartGame() {
         [0, 0, 0, 0]
     ];
 
-    addRandomTile(); 
+    addRandomTile();
     addRandomTile();
     createBoard();
+    score = 0;
 }
 
 

@@ -21,6 +21,17 @@ body {
     gap: 10px;
 }
 
+#stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: wheat;
+    height: 50px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    font-size: 24px;
+}
+
 .cell {
     width: 100px;
     height: 100px;
@@ -28,7 +39,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
+    font-size: 34px;
     color: #776e65;
     border-radius: 5px;
 }
