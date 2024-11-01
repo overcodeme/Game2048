@@ -1,4 +1,5 @@
 const stats = document.getElementById('stats');
+const restart = document.getElementById('restart')
 const grid = document.getElementById('grid');
 document.addEventListener('keydown', handleKeyPress);
 
@@ -11,6 +12,7 @@ let board = [
 ];
 
 stats.textContent = `Score: ${score}`
+restart.addEventListener('click', restartGame);
 
 function createBoard() {
     const grid = document.getElementById('grid');
@@ -188,6 +190,7 @@ function showGameOver() {
     message.textContent = 'Game Over'
 
     const restartButton = document.createElement('button')
+    restartButton.classList.add('button1')
     restartButton.textContent = 'Restart'
     restartButton.addEventListener('click', restartGame)
 
@@ -197,9 +200,6 @@ function showGameOver() {
 }
 
 function restartGame() {
-    const overlay = document.querySelector('.overlay')
-    document.body.removeChild(overlay)
-
     board = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
@@ -210,7 +210,8 @@ function restartGame() {
     addRandomTile();
     addRandomTile();
     createBoard();
-    score = 0;
+    score = 0
+    stats.textContent = `Score: ${score}`
 }
 
 
