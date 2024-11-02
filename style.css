@@ -41,7 +41,7 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 34px;
-    color: #776e65;
+    color: grey;
     border-radius: 5px;
 }
 
@@ -84,21 +84,4 @@ body {
 
 .button2:hover {
     cursor: pointer;
-}
-
-.tile-2 {
-
-}
-
-.tile-4 {
-
-}
-
-.tile-8 {
-
-}
-
-.tile-16 {
-
-    
 }

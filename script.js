@@ -3,6 +3,20 @@ const restart = document.getElementById('restart')
 const grid = document.getElementById('grid');
 document.addEventListener('keydown', handleKeyPress);
 
+const colors = [
+    '#EEE4DA', // 2
+    '#EDE0C8', // 4
+    '#F2B179', // 8
+    '#F59563', // 16
+    '#F67C5F', // 32
+    '#F65E3B', // 64
+    '#EDCF72', // 128
+    '#EDCC61', // 256
+    '#EDC850', // 512
+    '#EDC53F', // 1024
+    '#EDC22E'  // 2048
+];
+
 let score = 0;
 let board = [
     [0, 0, 0, 0],
