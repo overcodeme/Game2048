@@ -39,7 +39,7 @@ function createBoard() {
 
             if (board[row][col] !== 0) {
                 cell.textContent = board[row][col];
-                cell.classList.add(`tile-${board[row][col]}`);
+                cell.style.backgroundColor = colors[Math.log2(board[row][col])-1];
             }
 
             grid.appendChild(cell); 
@@ -191,27 +191,13 @@ function isGameOver() {
         }
     }
 
-    showGameOver()
+    if (confirm('Game Over, Do you wanna restart game?')) {
+        restartGame()
+    }
+    
     return True
 }
 
-function showGameOver() {
-    const overlay = document.createElement('div')
-    overlay.classList.add('overlay')
-
-    const message = document.createElement('div')
-    message.classList.add('message')
-    message.textContent = 'Game Over'
-
-    const restartButton = document.createElement('button')
-    restartButton.classList.add('button1')
-    restartButton.textContent = 'Restart'
-    restartButton.addEventListener('click', restartGame)
-
-    message.appendChild(restartButton)
-    overlay.appendChild(message)
-    document.body.appendChild(overlay)
-}
 
 function restartGame() {
     board = [
