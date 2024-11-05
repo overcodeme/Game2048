@@ -1,6 +1,7 @@
 const stats = document.getElementById('stats');
 const restart = document.getElementById('restart')
-const grid = document.getElementById('grid');
+const grid4 = document.getElementById('grid4');
+let board_size = 4; // Переменная для изменения размера доски
 document.addEventListener('keydown', handleKeyPress);
 
 const colors = [
@@ -23,14 +24,14 @@ let board = [
     [0, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0]
-];
+]; // Изменить создание матрицы в зависимости от переменной board_size
 
 stats.textContent = `Score: ${score}`
 restart.addEventListener('click', restartGame);
 
 function createBoard() {
-    const grid = document.getElementById('grid');
-    grid.innerHTML = ''; 
+    const grid4 = document.getElementById('grid4');
+    grid4.innerHTML = ''; 
 
     for (let row = 0; row < 4; row++) {
         for (let col = 0; col < 4; col++) {
@@ -42,7 +43,7 @@ function createBoard() {
                 cell.style.backgroundColor = colors[Math.log2(board[row][col])-1];
             }
 
-            grid.appendChild(cell); 
+            grid4.appendChild(cell); 
         }
     }
 }
@@ -115,9 +116,7 @@ function handleKeyPress(event) {
     }
     createBoard();
 
-    if (isGameOver()) {
-        showGameOver();
-    }
+    isGameOver();
 }
 
 
