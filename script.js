@@ -1,8 +1,16 @@
 const stats = document.getElementById('stats');
 const restart = document.getElementById('restart')
 const grid4 = document.getElementById('grid4');
-let board_size = 4; // Переменная для изменения размера доски
+let board_size_num = 4; // Переменная для изменения размера доски
+let board_size = document.querySelectorAll(".size");
 document.addEventListener('keydown', handleKeyPress);
+
+board_size.forEach(size => {
+    size.addEventListener("click", function() {
+        board_size_num = parseInt(size.textContent[0]);
+        console.log(`Выбран размер поля ${board_size_num}`)
+    });
+});
 
 const colors = [
     '#EEE4DA', // 2
@@ -19,19 +27,16 @@ const colors = [
 ];
 
 let score = 0;
-let board = [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0]
-]; // Изменить создание матрицы в зависимости от переменной board_size
+let board = Array.from({ length: board_size_num }, () => 
+    Array(board_size_num).fill(0)
+);
 
 stats.textContent = `Score: ${score}`
 restart.addEventListener('click', restartGame);
 
 function createBoard() {
-    const grid4 = document.getElementById('grid4');
-    grid4.innerHTML = ''; 
+    const grid = document.getElementById(`grid${board_size_num}`);
+    grid.innerHTML = ''; 
 
     for (let row = 0; row < 4; row++) {
         for (let col = 0; col < 4; col++) {
