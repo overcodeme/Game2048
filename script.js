@@ -1,6 +1,5 @@
 const stats = document.getElementById('stats');
-const restart = document.getElementById('restart')
-const grid4 = document.getElementById('grid4');
+const restart = document.getElementById('restart');
 let board_size_num = 4; // Переменная для изменения размера доски
 let board_size = document.querySelectorAll(".size");
 document.addEventListener('keydown', handleKeyPress);
@@ -8,7 +7,9 @@ document.addEventListener('keydown', handleKeyPress);
 board_size.forEach(size => {
     size.addEventListener("click", function() {
         board_size_num = parseInt(size.textContent[0]);
-        console.log(`Выбран размер поля ${board_size_num}`)
+        console.log(`Выбран размер поля ${board_size_num}`);
+        
+        restartGame(); // Перезапускаем игру с новым размером доски
     });
 });
 
@@ -31,32 +32,38 @@ let board = Array.from({ length: board_size_num }, () =>
     Array(board_size_num).fill(0)
 );
 
-stats.textContent = `Score: ${score}`
+stats.textContent = `Score: ${score}`;
 restart.addEventListener('click', restartGame);
 
 function createBoard() {
-    const grid = document.getElementById(`grid${board_size_num}`);
-    grid.innerHTML = ''; 
+    const container = document.querySelector('.game-container');
+    const overlay = document.querySelector('#overlay')
+    container.innerHTML = ''; 
 
-    for (let row = 0; row < 4; row++) {
-        for (let col = 0; col < 4; col++) {
+    const grid = document.createElement('div');
+    grid.classList.add(`grid${board_size_num}`);
+    container.appendChild(overlay)
+    container.appendChild(grid);
+
+    for (let row = 0; row < board_size_num; row++) {
+        for (let col = 0; col < board_size_num; col++) {
             const cell = document.createElement('div');
             cell.classList.add('cell');
 
             if (board[row][col] !== 0) {
                 cell.textContent = board[row][col];
-                cell.style.backgroundColor = colors[Math.log2(board[row][col])-1];
+                cell.style.backgroundColor = colors[Math.log2(board[row][col]) - 1];
             }
 
-            grid4.appendChild(cell); 
+            grid.appendChild(cell); 
         }
     }
 }
 
 function addRandomTile() {
     let emptyCells = [];
-    for (let row = 0; row < 4; row++) {
-        for (let col = 0; col < 4; col++) {
+    for (let row = 0; row < board_size_num; row++) {
+        for (let col = 0; col < board_size_num; col++) {
             if (board[row][col] === 0) emptyCells.push({ row, col });
         }
     }
@@ -64,14 +71,13 @@ function addRandomTile() {
     if (emptyCells.length > 0) {
         let { row, col } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         board[row][col] = Math.random() > 0.1 ? 2 : 4;
-        createBoard();
     }
 }
 
 function slideRowLeft(row) {
     let filteredRow = row.filter(value => value !== 0);
 
-    while (filteredRow.length < 4) {
+    while (filteredRow.length < board_size_num) {
         filteredRow.push(0);
     }
 
@@ -83,8 +89,8 @@ function combineRow(row) {
         if (row[i] === row[i + 1] && row[i] !== 0) {
             row[i] *= 2;  
             row[i + 1] = 0; 
-            score += (row[i] + row[i+1]);
-            stats.textContent = `Score: ${score}`
+            score += row[i];
+            stats.textContent = `Score: ${score}`;
         }
     }
     return row;
@@ -93,9 +99,9 @@ function combineRow(row) {
 function transpose(matrix) {
     const transposed = [];
 
-    for (let colIndex = 0; colIndex < 4; colIndex++) {
+    for (let colIndex = 0; colIndex < board_size_num; colIndex++) {
         const newRow = []; 
-        for (let rowIndex = 0; rowIndex < 4; rowIndex++) {
+        for (let rowIndex = 0; rowIndex < board_size_num; rowIndex++) {
             newRow.push(matrix[rowIndex][colIndex]); 
         }
         transposed.push(newRow); 
@@ -120,13 +126,12 @@ function handleKeyPress(event) {
             break;
     }
     createBoard();
-
     isGameOver();
 }
 
 
 function moveLeft() {
-    for (let row = 0; row < 4; row++) {
+    for (let row = 0; row < board_size_num; row++) {
         board[row] = slideRowLeft(board[row]); 
         board[row] = combineRow(board[row]); 
         board[row] = slideRowLeft(board[row]); 
@@ -136,7 +141,7 @@ function moveLeft() {
 }
 
 function moveRight() {
-    for (let row = 0; row < 4; row++) {
+    for (let row = 0; row < board_size_num; row++) {
         board[row].reverse(); 
         board[row] = slideRowLeft(board[row]);
         board[row] = combineRow(board[row]);
@@ -149,7 +154,7 @@ function moveRight() {
 
 function moveUp() {
     board = transpose(board);    
-    for (let row = 0; row < 4; row++) {
+    for (let row = 0; row < board_size_num; row++) {
         board[row] = slideRowLeft(board[row]);
         board[row] = combineRow(board[row]);
         board[row] = slideRowLeft(board[row]);
@@ -161,7 +166,7 @@ function moveUp() {
 
 function moveDown() {
     board = transpose(board);  
-    for (let row = 0; row < 4; row++) {
+    for (let row = 0; row < board_size_num; row++) {
         board[row].reverse();  
         board[row] = slideRowLeft(board[row]);
         board[row] = combineRow(board[row]);
@@ -174,51 +179,43 @@ function moveDown() {
 }
 
 function isGameOver() {
-    for (let row = 0; row < 4; row ++) {
-        for (let col = 0; col < 4; col++) {
+    for (let row = 0; row < board_size_num; row++) {
+        for (let col = 0; col < board_size_num; col++) {
             if (board[row][col] === 0) {
-                return False
+                return false; 
             }
         }
     }
 
-    for (let row = 0; row < 3; row++) {
-        for (let col = 0; col < 3; col ++) {
-
-            if (board[row][col] === board[row][col+1]) {
-                return False
+    for (let row = 0; row < board_size_num; row++) {
+        for (let col = 0; col < board_size_num; col++) {
+            if (col < board_size_num - 1 && board[row][col] === board[row][col + 1]) {
+                return false;
             }
-
-            if (board[row][col] === board[row+1][col]) {
-                return False
+            if (row < board_size_num - 1 && board[row][col] === board[row + 1][col]) {
+                return false;
             }
         }
     }
 
     if (confirm('Game Over, Do you wanna restart game?')) {
-        restartGame()
+        restartGame();
     }
-    
-    return True
+
+    return true;
 }
 
-
 function restartGame() {
-    board = [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0]
-    ];
-
+    board = Array.from({ length: board_size_num }, () => 
+        Array(board_size_num).fill(0)
+    );
+    score = 0;
+    stats.textContent = `Score: ${score}`;
     addRandomTile();
     addRandomTile();
     createBoard();
-    score = 0
-    stats.textContent = `Score: ${score}`
 }
 
-
+addRandomTile(); 
+addRandomTile();
 createBoard();
-addRandomTile(); 
-addRandomTile(); 

@@ -49,28 +49,28 @@ body {
     border-radius: 5px;
 }
 
-#grid3 {
+.grid3 {
     display: grid;
     grid-template-columns: repeat(3, 150px);
     grid-template-rows: repeat(3, 150px);
     gap: 10px;
 }
 
-#grid4 {
+.grid4 {
     display: grid;
     grid-template-columns: repeat(4, 100px);
     grid-template-rows: repeat(4, 100px);
     gap: 10px;
 }
 
-#grid5 {
+.grid5 {
     display: grid;
     grid-template-columns: repeat(5, 80px);
     grid-template-rows: repeat(5, 80px);
     gap: 10px;
 }
 
-#grid6 {
+.grid6 {
     display: grid;
     grid-template-columns: repeat(6, 60px);
     grid-template-rows: repeat(6, 60px);
@@ -90,8 +90,8 @@ body {
 }
 
 .cell {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
     background-color: #cdc1b4;
     display: flex;
     justify-content: center;
@@ -100,6 +100,11 @@ body {
     color: #776E65;
     border-radius: 5px;
 }
+
+.grid3 .cell { font-size: 40px; }
+.grid4 .cell { font-size: 34px; }
+.grid5 .cell { font-size: 28px; }
+.grid6 .cell { font-size: 24px; }
 
 .button2 {
     border: none;
